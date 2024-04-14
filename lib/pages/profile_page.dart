@@ -14,16 +14,23 @@ class ProfilePage extends StatelessWidget {
     return Scaffold(
       appBar: _buildAppBar(),
       endDrawer: ProfileDrawer(),
-      body: Column(
-        children: [
-          ProfileHeader(),
-          ProfileCountInfo(),
-          ProfileButtons(),
-          Expanded(child: ProfileTab())
-        ],
+      body: NestedScrollView(
+        headerSliverBuilder: (context, _) {
+          return [
+            SliverList(
+              delegate: SliverChildListDelegate([
+                ProfileHeader(),
+                ProfileCountInfo(),
+                ProfileButtons(),
+              ]),
+            ),
+          ];
+        },
+        body: ProfileTab(),
       ),
     );
   }
+
   AppBar _buildAppBar() {
     return AppBar(
       leading: Icon(Icons.arrow_back_ios),
@@ -31,5 +38,4 @@ class ProfilePage extends StatelessWidget {
       centerTitle: true,
     );
   }
-
 }
